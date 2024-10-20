@@ -82,8 +82,7 @@ class Login(Resource):
 api.add_resource(Login, '/login')
 
 
-@app.route('/users', methods=['GET'])
-class User(Resource):
+class UserList(Resource):
     def get(self):
         users = User.query.all()
         return jsonify([{
@@ -95,7 +94,7 @@ class User(Resource):
         } for user in users])
 
 
-api.add_resource(User, '/user')
+api.add_resource(UserList, '/users')
 
 if __name__ == '__main__':
     app.run(debug=True)

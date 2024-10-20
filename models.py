@@ -10,11 +10,11 @@ db = SQLAlchemy()
 #User Model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(150), nullable=False)
-    last_name = db.Column(db.String(150), nullable=False)
-    username = db.Column(db.String(150), nullable=False, unique=True)
-    password_hash = db.Column(db.String(150), nullable=False)
-    role = db.Column(db.String(150), nullable=False, default='patient')
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False, unique=True)
+    password_hash = db.Column(db.String, nullable=False)
+    role = db.Column(db.String, nullable=False, default='patient')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -25,7 +25,7 @@ class User(db.Model):
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
-    specialization = db.Column(db.String(150))
+    specialization = db.Column(db.String)
 
 #Admin availability
 class Availability(db.Model):
