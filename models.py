@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_cors import CORS
+# from flask_cors import CORS
 import os
 
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 #User Model
 class User(db.Model):
@@ -22,23 +22,26 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 #Admin Model
-class Admin(db.model):
+class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
     specialization = db.Column(db.String(150))
 
 #Admin availability
-class Availability(db.model):
+class Availability(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), unique=True)
-    available_start_time
+    available_start_time = db.Column(db.String)
+    available_end_time = db.Column(db.String)
+    days_of_week = db.Column(db.String)
+    status = db.Column(db.String, default='available')
 
 #Patient Model
-class Patient(db.model):
+class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
-#Initialize the db
-with app.app_context():
-    # db.drop_all()
-    db.create_all()
+# #Initialize the db
+# with app.app_context():
+#     # db.drop_all()
+#     db.create_all()
